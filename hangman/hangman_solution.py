@@ -5,7 +5,7 @@ class Hangman:
         self.word = random.choice(word_list)
         self.word_guessed = ['_'] * len(self.word)
         self.num_letters = len(set(self.word))
-        # self.num_lives = num_lives
+        self.num_lives = num_lives
         self.list_letters = [] # List of letters that have already been tried
         print(f'The mistery word has {len(self.word)} characters')
         print(self.word_guessed)
