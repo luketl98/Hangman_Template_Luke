@@ -27,4 +27,4 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2.3.1
       - name: Run the test
-        run: python3 -m test.test_hangman > report.txt 2>errors.txt
+        run: python3 -m test.test_hangman
