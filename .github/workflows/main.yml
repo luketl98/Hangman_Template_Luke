@@ -22,5 +22,5 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install aicore-hangman==0.0.1
-      - name: Correct the solution
+      - name: Verify task completion
         run: python -m hangman_test
