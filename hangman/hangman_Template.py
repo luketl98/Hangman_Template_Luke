@@ -43,7 +43,7 @@ class Hangman:
     def __init__(self, word_list, num_lives=5):
         # TODO 2: Initialize the attributes as indicated in the docstring
         # TODO 2: Print two message upon initialization:
-        # 1. "The mistery word has {num_letters} characters"
+        # 1. "The mystery word has {number of letters} characters" (The number of letters is NOT the UNIQUE number of letters)
         # 2. {word_guessed}
         pass
 
@@ -89,7 +89,7 @@ def play_game(word_list):
     
     # TODO 4: Iteratively ask the user for a letter until the user guesses the word or runs out of lives
     # If the user guesses the word, print "Congratulations! You won!"
-    # If the user runs out of lives, print "You lost! The word was {word}"
+    # If the user runs out of lives, print "You ran out of lives. The word was {word}"
 
     pass
 
