@@ -17,7 +17,7 @@ class Hangman:
         List of words to be used in the game
     num_lives: int
         Number of lives the player has
-    #fjfjfjfjfj
+    #fjfjfjfjfj jxnjchjshc
     Attributes:
     ----------
     word: str
