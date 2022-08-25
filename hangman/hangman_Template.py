@@ -3,6 +3,7 @@ Make sure you complete all the TODOs in this file.
 The prints have to contain the same text as indicated, don't add any more prints,
 or you will get 0 for this assignment.
 '''
+from ast import While
 import random
 
 class Hangman:
@@ -73,17 +74,31 @@ class Hangman:
         2. If the character is a single character
         If it passes both checks, it calls the check_letter method.
         '''
+        while True:
+            letter = input("Enter a letter : ")
+            if letter.isalpha() == False:
+                print("Please, enter an alphabetical character")
+
+            elif len(letter) != 1 :
+                print("Please, enter just one character")
+
+            else:
+                print("Thats it!")
+                break
+
         # TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
         # TODO 1: Assign the letter to a variable called `letter`
         # TODO 1: The letter has to comply with the following criteria: It has to be a single character. If it is not, print "Please, enter just one character"
         # TODO 2. It has to be a letter that has not been tried yet. Use the list_letters attribute to check this. If it has been tried, print "{letter} was already tried".
         # TODO 3: If the letter is valid, call the check_letter method
-        pass
+            pass
+        
 
 def play_game(word_list):
     # As an aid, part of the code is already provided:
     game = Hangman(word_list, num_lives=5)
     # TODO 1: To test this task, you can call the ask_letter method
+    game.ask_letter()
     # TODO 2: To test this task, upon initialization, two messages should be printed 
     # TODO 3: To test this task, you call the ask_letter method and check if the letter is in the word
     
