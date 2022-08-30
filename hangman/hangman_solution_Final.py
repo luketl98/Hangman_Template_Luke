@@ -29,10 +29,10 @@ class Hangman:
         For example, if the word is 'apple', the word_guessed list would be ['_', '_', '_', '_', '_']
         If the player guesses 'a', the list would be ['a', '_', '_', '_', '_']
     num_letters: int
-        The number of UNIQUE letters in the word that have not been guessed yet
+        The number of UNIQUE letters in the word that have not yet been guessed yet
     DONE -- num_lives: int
         The number of lives the player has
-    list_letters: list
+    DONE -- list_letters: list
         A list of the letters that have already been tried
 
     Methods:
@@ -63,6 +63,8 @@ class Hangman:
         self.list_letters = []
 
         # -------------
+        self.string_into_letters = list(self.word)
+        print(self.string_into_letters)
         print(f'The mystery word has {len(self.word)} characters')
 
 
@@ -85,6 +87,7 @@ class Hangman:
         # TODO 3: If the letter is in the word, the number of UNIQUE letters in the word that have not been guessed yet has to be reduced by 1
         # TODO 3: If the letter is not in the word, reduce the number of lives by 1
         # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
+
         pass
 
     def ask_letter(self):
@@ -102,12 +105,15 @@ class Hangman:
             elif len(letter) != 1 :
                 print("Please, enter just one character")
 
-            elif len(self.word) <= len(self.word_guessed):
-                self.list_letters.append(letter)
-                print(self.list_letters)
+            elif self.string_into_letters.count(letter) == True:
+                print('NICE ONE BIG BOY! This letter is in the word!')
+                self.word_guessed.append(letter)
+                print(self.word_guessed)
 
             else:
-                print("Thats it!")
+                self.list_letters.append(letter)
+                print(self.list_letters)
+                print("SHIEEEET Bitch, This letter is NOT in the word!")
                 
 
         # TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
