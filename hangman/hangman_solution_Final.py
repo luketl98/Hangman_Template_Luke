@@ -6,6 +6,7 @@ or you will get 0 for this assignment.
 from ast import While
 from http.client import OK
 import random
+from subprocess import call
 
 class Hangman:
     '''
@@ -88,6 +89,17 @@ class Hangman:
         # TODO 3: If the letter is not in the word, reduce the number of lives by 1
         # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
 
+        # Letter IS in the word
+        if self.string_into_letters.count(letter) == True:
+                print('NICE ONE BIG BOY! This letter is in the word!')
+                self.word_guessed.append(letter)
+                print(self.word_guessed)
+
+        else:
+                self.list_letters.append(letter)
+                print(self.list_letters)
+                print("SHIEEEET Bitch, This letter is NOT in the word!")
+
         pass
 
     def ask_letter(self):
@@ -105,15 +117,25 @@ class Hangman:
             elif len(letter) != 1 :
                 print("Please, enter just one character")
 
-            elif self.string_into_letters.count(letter) == True:
-                print('NICE ONE BIG BOY! This letter is in the word!')
-                self.word_guessed.append(letter)
-                print(self.word_guessed)
+            # Letter IS in the word
+            # elif self.string_into_letters.count(letter) == True:
+            #    print('NICE ONE BIG BOY! This letter is in the word!')
+            #    self.word_guessed.append(letter)
+            #    print(self.word_guessed)
 
+            # Letter ALREADY tried
+            elif self.list_letters.count(letter) == True:
+                print(f'This {letter} has already been tried')
+
+            # Letter NOT in the word
+            # else:
+            #    self.list_letters.append(letter)
+            #    print(self.list_letters)
+            #    print("SHIEEEET Bitch, This letter is NOT in the word!")
             else:
-                self.list_letters.append(letter)
-                print(self.list_letters)
-                print("SHIEEEET Bitch, This letter is NOT in the word!")
+                Hangman.check_letter(self, letter)
+                
+            
                 
 
         # TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
