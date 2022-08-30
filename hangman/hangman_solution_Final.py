@@ -4,6 +4,7 @@ The prints have to contain the same text as indicated, don't add any more prints
 or you will get 0 for this assignment.
 '''
 from ast import While
+from http.client import OK
 import random
 
 class Hangman:
@@ -18,10 +19,10 @@ class Hangman:
         List of words to be used in the game
     num_lives: int
         Number of lives the player has
-    #fjfjfjfjfj jxnjchjshc
+
     Attributes:
     ----------
-    word: str
+    DONE -- word: str
         The word to be guessed picked randomly from the word_list
     word_guessed: list
         A list of the letters of the word, with '_' for each letter not yet guessed
@@ -29,7 +30,7 @@ class Hangman:
         If the player guesses 'a', the list would be ['a', '_', '_', '_', '_']
     num_letters: int
         The number of UNIQUE letters in the word that have not been guessed yet
-    num_lives: int
+    DONE -- num_lives: int
         The number of lives the player has
     list_letters: list
         A list of the letters that have already been tried
@@ -46,6 +47,25 @@ class Hangman:
         # TODO 2: Print two message upon initialization:
         # 1. "The mystery word has {len(self.word)} characters" (The number of letters is NOT the UNIQUE number of letters)
         # 2. {word_guessed}
+        self.word_list = word_list 
+        self.num_lives = num_lives
+        self.word = random.choice(word_list)
+        # print(self.word)
+
+        # word_guessed --------------- 
+        self.word_guessed = []
+        while len(self.word_guessed) != len(self.word):
+            self.word_guessed.append('_')
+        else:
+            print(self.word_guessed)
+
+        # list_letters ---------------
+        self.list_letters = []
+
+        # -------------
+        print(f'The mystery word has {len(self.word)} characters')
+
+
         pass
 
     def check_letter(self, letter) -> None:
@@ -82,9 +102,13 @@ class Hangman:
             elif len(letter) != 1 :
                 print("Please, enter just one character")
 
+            elif len(self.word) <= len(self.word_guessed):
+                self.list_letters.append(letter)
+                print(self.list_letters)
+
             else:
                 print("Thats it!")
-                break
+                
 
         # TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
         # TODO 1: Assign the letter to a variable called `letter`
@@ -109,6 +133,6 @@ def play_game(word_list):
     pass
 
 if __name__ == '__main__':
-    word_list = ['apple', 'banana', 'orange', 'pear', 'strawberry', 'watermelon']
+    word_list = ['pear'] # 'apple', 'banana', 'orange', 'strawberry', 'watermelon'
     play_game(word_list)
 # %%
