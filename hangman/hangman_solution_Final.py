@@ -96,12 +96,10 @@ class Hangman:
         # Letter IS in the word
         if self.word.count(letter) == True:
                 print('Nice, this letter is in the word!')
-                self.word_guessed.append(letter)
                 self.list_letters.append(letter)
-                print(self.word_guessed)
                 # ------------
-                self.letter_index = self.word_guessed.index(letter)
-                print('letter index : ', self.letter_index)
+                self.letter_index = self.word.index(letter)
+                
                 self.word_guessed[self.letter_index] = letter
                 print(self.word_guessed)
 
@@ -175,6 +173,6 @@ def play_game(word_list):
     pass
 
 if __name__ == '__main__':
-    word_list = ['pear'] # 'apple', 'banana', 'orange', 'strawberry', 'watermelon'
+    word_list = ['apple'] # 'pear', 'banana', 'orange', 'strawberry', 'watermelon'
     play_game(word_list)
 # %%
