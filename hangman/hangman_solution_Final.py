@@ -4,6 +4,7 @@ The prints have to contain the same text as indicated, don't add any more prints
 or you will get 0 for this assignment.
 '''
 from ast import While
+from dataclasses import replace
 from http.client import OK
 import random
 from subprocess import call
@@ -50,7 +51,7 @@ class Hangman:
         # 2. {word_guessed}
         self.word_list = word_list 
         self.num_lives = num_lives
-        self.word = random.choice(word_list)
+        self.word = list(random.choice(word_list))
         # print(self.word)
 
         # word_guessed --------------- 
@@ -60,12 +61,15 @@ class Hangman:
         else:
             print(self.word_guessed)
 
+        # INDEX
+        #print(self.word_guessed.index(''))
+        
+
         # list_letters ---------------
         self.list_letters = []
 
-        # -------------
-        self.string_into_letters = list(self.word)
-        print(self.string_into_letters)
+
+
         print(f'The mystery word has {len(self.word)} characters')
 
 
@@ -90,16 +94,23 @@ class Hangman:
         # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
 
         # Letter IS in the word
-        if self.string_into_letters.count(letter) == True:
-                print('NICE ONE BIG BOY! This letter is in the word!')
+        if self.word.count(letter) == True:
+                print('Nice, this letter is in the word!')
                 self.word_guessed.append(letter)
+                self.list_letters.append(letter)
                 print(self.word_guessed)
+                # ------------
+                self.letter_index = self.word_guessed.index(letter)
+                print('letter index : ', self.letter_index)
+                self.word_guessed[self.letter_index] = letter
+                print(self.word_guessed)
+
 
         # Letter NOT in the word
         else:
                 self.list_letters.append(letter)
                 print(self.list_letters)
-                print("SHIEEEET Bitch, This letter is NOT in the word!")
+                print("Damn, this letter is NOT in the word!")
                 self.num_lives = self.num_lives -1
                 print(f'You have {self.num_lives} lives left!')
 
@@ -114,29 +125,23 @@ class Hangman:
         '''
         while True:
             letter = input("Enter a letter : ")
+            letter = letter.lower()
+            # Checks that letter is an alphabetical character
             if letter.isalpha() == False:
                 print("Please, enter an alphabetical character")
 
+            # Checks that user inputs just one letter
             elif len(letter) != 1 :
                 print("Please, enter just one character")
 
-            # Letter IS in the word
-            # elif self.string_into_letters.count(letter) == True:
-            #    print('NICE ONE BIG BOY! This letter is in the word!')
-            #    self.word_guessed.append(letter)
-            #    print(self.word_guessed)
-
             # Checks if letter has already been tried
-            elif self.list_letters.count(letter) == True or self.word_guessed.count(letter) == True:
+            elif self.list_letters.count(letter) == True:
                 print(f'{letter} was already tried')
 
-            # Letter NOT in the word
-            # else:
-            #    self.list_letters.append(letter)
-            #    print(self.list_letters)
-            #    print("SHIEEEET Bitch, This letter is NOT in the word!")
+            # Calls check_letter method
             else:
                 Hangman.check_letter(self, letter)
+
                 
             
                 
@@ -164,7 +169,7 @@ def play_game(word_list):
     # CODE FOR TODO 4 BELOW ------------------------- 
 
     # while self.num_lives <= 0:
-    #        print('You fucked it boyo')
+    #        print('You failed')
     #        break
 
     pass
