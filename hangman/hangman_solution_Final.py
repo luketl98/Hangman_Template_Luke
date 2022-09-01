@@ -94,11 +94,13 @@ class Hangman:
         # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
 
         # Letter IS in the word
-        if self.word.count(letter) == True:
+        if letter in self.word:
                 print('Nice, this letter is in the word!')
                 self.list_letters.append(letter)
+                print(self.word.count(letter))
                 # ------------
                 self.letter_index = self.word.index(letter)
+                print(self.letter_index)
                 
                 self.word_guessed[self.letter_index] = letter
                 print(self.word_guessed)
