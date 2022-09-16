@@ -26,7 +26,7 @@ class Hangman:
     ----------
     DONE -- word: str
         The word to be guessed picked randomly from the word_list
-    word_guessed: list
+    NOT DONE PROPERLY -- word_guessed: list
         A list of the letters of the word, with '_' for each letter not yet guessed
         For example, if the word is 'apple', the word_guessed list would be ['_', '_', '_', '_', '_']
         If the player guesses 'a', the list would be ['a', '_', '_', '_', '_']
@@ -47,7 +47,7 @@ class Hangman:
     def __init__(self, word_list, num_lives=5):
         # TODO 2: Initialize the attributes as indicated in the docstring
         # TODO 2: Print two message upon initialization:
-        # 1. "The mystery word has {len(self.word)} characters" (The number of letters is NOT the UNIQUE number of letters)
+        # DONE -- 1. "The mystery word has {len(self.word)} characters" (The number of letters is NOT the UNIQUE number of letters)
         # 2. {word_guessed}
         self.word_list = word_list 
         self.num_lives = num_lives
@@ -68,12 +68,23 @@ class Hangman:
         # list_letters ---------------
         self.list_letters = []
 
-
-
         print(f'The mystery word has {len(self.word)} characters')
 
 
         pass
+
+#------ NEW FUNCTION -------- MULTIPLE LETTER ISSUE
+
+
+    def find_indices(self, letter):
+        # indices = []
+        for i, value in enumerate(self.word):
+            if value == letter:
+                self.word_guessed.append(i)
+        return self.word_guessed
+        
+
+#---------------- END -----------------
 
     def check_letter(self, letter) -> None:
         '''
@@ -87,23 +98,28 @@ class Hangman:
             The letter to be checked
 
         '''
-        # TODO 3: Check if the letter is in the word. TIP: You can use the lower() method to convert the letter to lowercase
-        # TODO 3: If the letter is in the word, replace the '_' in the word_guessed list with the letter
-        # TODO 3: If the letter is in the word, the number of UNIQUE letters in the word that have not been guessed yet has to be reduced by 1
-        # DONE -- TODO 3: If the letter is not in the word, reduce the number of lives by 1
+        # TODO 3.1 : Check if the letter is in the word. TIP: You can use the lower() method to convert the letter to lowercase
+        # DONE -- TODO 3.2 : If the letter is in the word, replace the '_' in the word_guessed list with the letter
+        # TODO 3.3 : If the letter is in the word, the number of UNIQUE letters in the word that have not been guessed yet has to be reduced by 1
+        # DONE -- TODO 3.4 : If the letter is not in the word, reduce the number of lives by 1
         # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
 
         # Letter IS in the word
         if letter in self.word:
                 print('Nice, this letter is in the word!')
                 self.list_letters.append(letter)
-                print(self.word.count(letter))
+                print('count : ', self.word.count(letter))
                 # ------------
                 self.letter_index = self.word.index(letter)
-                print(self.letter_index)
+                print('index : ', self.letter_index)
                 
+                # TODO 3.2 --- DONE
                 self.word_guessed[self.letter_index] = letter
                 print(self.word_guessed)
+
+                Hangman.find_indices(self, letter)
+                print(Hangman.find_indices(self.word, letter))
+
 
 
         # Letter NOT in the word
@@ -111,10 +127,13 @@ class Hangman:
                 self.list_letters.append(letter)
                 print(self.list_letters)
                 print("Damn, this letter is NOT in the word!")
+
+                # TODO 3.4 --- DONE
                 self.num_lives = self.num_lives -1
                 print(f'You have {self.num_lives} lives left!')
 
         pass
+
 
     def ask_letter(self):
         '''
@@ -161,7 +180,6 @@ def play_game(word_list):
     game.ask_letter()
     # TODO 2: To test this task, upon initialization, two messages should be printed 
     # TODO 3: To test this task, you call the ask_letter method and check if the letter is in the word
-    
     # TODO 4: Iteratively ask the user for a letter until the user guesses the word or runs out of lives
     # If the user guesses the word, print "Congratulations, you won!"
     # If the user runs out of lives, print "You ran out of lives. The word was {word}"
