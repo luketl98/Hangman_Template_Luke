@@ -54,7 +54,8 @@ class Hangman:
         self.word_list = word_list 
         self.num_lives = num_lives
         self.word = list(random.choice(word_list))
-
+        print("\n")
+        print(f'The mystery word has {len(self.word)} characters')
         self.word_guessed = []
         while len(self.word_guessed) != len(self.word):
             self.word_guessed.append('_')
@@ -62,8 +63,6 @@ class Hangman:
             print(self.word_guessed)
 
         self.list_letters = []
-
-        print(f'The mystery word has {len(self.word)} characters')
 
         pass
 
@@ -170,7 +169,7 @@ class Hangman:
             # Calls check_letter method
             else:
                 Hangman.check_letter(self, self.letter)
-                
+
             # Asks user if they want to play again
         else:
             if input("Do you want to play again (y/n)") == 'n':
