@@ -10,6 +10,7 @@ import random
 from subprocess import call
 import sys
 
+
 class Hangman:
     '''
     A Hangman Game that asks the user for a letter and checks if it is in the word.
@@ -100,8 +101,9 @@ class Hangman:
 
 
         # Letter IS in the word
-        if self.word_guessed.count('_') == 0:
-            print("woo")
+        if self.word_guessed.count('_') == 1 and self.letter in self.word:
+            print("Congratulations, you won!")
+            
         elif self.letter in self.word:
                 print('Nice, this letter is in the word!')
                 self.list_letters.append(self.letter)
@@ -131,9 +133,9 @@ class Hangman:
                 print(f'You have {self.num_lives} lives left!')
 
                 # Stops the game if player is out of lives 
-                if self.num_lives == 0:
+                if self.num_lives <= 0:
                     print(f'You ran out of lives. The word was {self.word}')
-                    sys.exit()
+                    # sys.exit()
                 else:
                     pass
 
@@ -149,7 +151,8 @@ class Hangman:
         If it passes both checks, it calls the check_letter method.
         '''
 
-        while True:
+        while self.num_lives != 0 :
+            print("-------------------------")
             self.letter = input("Enter a letter : ")
             self.letter = self.letter.lower()
             # Checks that letter is an alphabetical character
@@ -167,11 +170,17 @@ class Hangman:
             # Calls check_letter method
             else:
                 Hangman.check_letter(self, self.letter)
-        
-
-        
-
                 
+            # Asks user if they want to play again
+        else:
+            if input("Do you want to play again (y/n)") == 'n':
+                pass
+            else:
+                game2 = Hangman(word_list, num_lives=5)
+                game2.ask_letter()
+
+            
+
 
         # DONE -- TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
         # DONE -- TODO 1: Assign the letter to a variable called `letter`
@@ -202,4 +211,6 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = ['apple'] # 'pear', 'banana', 'orange', 'strawberry', 'watermelon'
     play_game(word_list)
+
+
 # %%
