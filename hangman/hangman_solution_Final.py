@@ -1,15 +1,10 @@
-'''
-Make sure you complete all the TODOs in this file.
-The prints have to contain the same text as indicated, don't add any more prints,
-or you will get 0 for this assignment.
-'''
+
 from ast import While
 from dataclasses import replace
 from http.client import OK
 import random
 from subprocess import call
 import sys
-
 
 class Hangman:
     '''
@@ -45,30 +40,38 @@ class Hangman:
         Checks if the letter is in the word.
     ask_letter()
         Asks the user for a letter.
+    find_indicies()
     '''
+    
     def __init__(self, word_list, num_lives=5):
-        # DONE -- TODO 2: Initialize the attributes as indicated in the docstring
-        # DONE -- TODO 2: Print two message upon initialization:
-        # DONE -- 1. "The mystery word has {len(self.word)} characters" (The number of letters is NOT the UNIQUE number of letters)
-        # DONE -- 2. {word_guessed}
+
+        # List of words to be used in the game
         self.word_list = word_list 
+        # Number of lives the player has
         self.num_lives = num_lives
+        # Picks a word at random from the word list to be used as the mystery word
         self.word = list(random.choice(word_list))
         print("\n")
+        # Prints the number of letters in the mystery word
         print(f'The mystery word has {len(self.word)} characters')
+
+        # Converts the mystery word into a list of "empty" spaces with 
+        # the same number of characters as the word itself (i.e apple = '_''_''_''_''_' )
         self.word_guessed = []
         while len(self.word_guessed) != len(self.word):
             self.word_guessed.append('_')
         else:
             print(self.word_guessed)
 
+        # Creates the list for guessed letters to be appended to
         self.list_letters = []
 
         pass
 
 
 
-#------ Extra function, to replace correctly guessed letter if it appears in the word more than once
+    # A function used to replace a correctly guessed letter,
+    # if it appears in the mystery word more than once
 
     def find_indices(self, list_to_check, letter_to_check, blank_list):
 
@@ -92,14 +95,9 @@ class Hangman:
             The letter to be checked
 
         '''
-        # DONE -- TODO 3.1 : Check if the letter is in the word. TIP: You can use the lower() method to convert the letter to lowercase
-        # DONE -- TODO 3.2 : If the letter is in the word, replace the '_' in the word_guessed list with the letter
-        # UNUSED -- TODO 3.3 : If the letter is in the word, the number of UNIQUE letters in the word that have not been guessed yet has to be reduced by 1
-        # DONE -- TODO 3.4 : If the letter is not in the word, reduce the number of lives by 1
-        # Be careful! A word can contain the same letter more than once. TIP: Take a look at the index() method in the string class
-
+       
         # Visualised stages of hangman
-        stage1 = """
+        visual_1 = """
                     
                      
 
@@ -109,7 +107,7 @@ class Hangman:
                     =========
 
                     """
-        stage2 = """
+        visual_2 = """
                     +---+
                     |   |
                         |
@@ -118,7 +116,7 @@ class Hangman:
                         |
                     =========
                     """
-        stage3 = """
+        visual_3 = """
                     +---+
                     |   |
                     O   |
@@ -127,7 +125,7 @@ class Hangman:
                         |
                     =========
                     """
-        stage4 = """
+        visual_4 = """
                     +---+
                     |   |
                     O   |
@@ -136,7 +134,7 @@ class Hangman:
                         |
                     =========
                     """
-        stage5 = """
+        visual_5 = """
                     +---+
                     |   |
                     O   |
@@ -147,31 +145,34 @@ class Hangman:
                     """
 
         
-        # Rejoins the word into a single string for improved readability
+        # Rejoins the mystery word into a single string for improved readability
         joined_list = ' '.join(self.word)
 
-        # Letter IS in the word
+        # If letter IS in the word
         if self.letter in self.word:
 
-            # print('Nice, this letter is in the word!')
+            # Adds the guessed letter to the list of guessed letters
             self.list_letters.append(self.letter)
-            # print(f'Letters guessed : {self.list_letters}')
 
-            # ------------
+            # finds the index of the guessed letter in the mystery word
             self.letter_index = self.word.index(self.letter)
 
-            # ----- USING NEW FUNCTION 'FIND_INDICES' --------
+            # Calls the find_indicies function
             Hangman.find_indices(self, self.word, self.letter, self.word_guessed)
             
-            # TODO 3.2 --- DONE
+            # Replaces the guessed letter with the 
             self.word_guessed[self.letter_index] = self.letter
 
+            # If the user guesses all letters correctly and wins the game
             if self.word_guessed.count('_') == 0:
                 print("Congratulations, you won!")
                 print('\n')
 
                 print(f'The word was {joined_list}')
                 print('\n')
+
+                # Asks the user if they want to play again if they won,
+                # exits if no, reruns the program if yes
                 if input("Do you want to play again (y/n)") == 'n':
                     sys.exit()
                 else:
@@ -180,12 +181,13 @@ class Hangman:
                     game2 = Hangman(word_list, num_lives=5)
                     game2.ask_letter()
             else:
+                # If the letter is correct and the user still has more than 1 life left
                 print('Nice, this letter is in the word!')
                 print(f'Letters guessed : {self.list_letters}')
                 print(self.word_guessed)
 
 
-        # Letter NOT in the word
+        # If letter is NOT in the word
         else:
                 # Tells player the letter is incorrect and appends it to list_letters
                 self.list_letters.append(self.letter)
@@ -202,23 +204,24 @@ class Hangman:
                     print(f'Letters guessed : {self.list_letters}')
                     print(f'You have {self.num_lives} lives left!')
                     print(self.word_guessed)
-                
+
+                # Prints the hangman visuals 
                 if self.num_lives == 4:
-                    print(stage1)
+                    print(visual_1)
                 elif self.num_lives == 3:
-                    print(stage2)
+                    print(visual_2)
                 elif self.num_lives == 2:
-                    print(stage3)
+                    print(visual_3)
                 elif self.num_lives == 1:
-                    print(stage4)
+                    print(visual_4)
                 else:
                     pass
                 
 
-                # Tells player they failed and reveals the word 
+                # Tells player they failed, reveals the word and prints the final visual
                 if self.num_lives == 0:
                     print(f'You ran out of lives. The word was {joined_list}')
-                    print(stage5)
+                    print(visual_5)
                 else:
                     pass
         
@@ -232,11 +235,14 @@ class Hangman:
         2. If the character is a single character
         If it passes both checks, it calls the check_letter method.
         '''
-
+        # Checks that the user still has lives remaining, 
+        # then proceeds with the the ask_letter function
         while self.num_lives != 0:
             print("\n")
+            # Asks the user to input a letter
             self.letter = input("Enter a letter : ")
             print('\n')
+            # Converts the letter to lower case to allow uppercase letters to be used in the game
             self.letter = self.letter.lower()
             # Checks that letter is an alphabetical character
             if self.letter.isalpha() == False:
@@ -254,40 +260,29 @@ class Hangman:
             else:
                 Hangman.check_letter(self, self.letter)
 
-            # Asks user if they want to play again
-        else:
-            print('\n')
-            if input("Do you want to play again (y/n)") == 'n':
-                pass
-            else:
-                game2 = Hangman(word_list, num_lives=5)
-                game2.ask_letter()
-
-        # DONE -- TODO 1: Ask the user for a letter iteratively until the user enters a valid letter
-        # DONE -- TODO 1: Assign the letter to a variable called `letter`
-        # DONE -- TODO 1: The letter has to comply with the following criteria: It has to be a single character. If it is not, print "Please, enter just one character"
-        # DONE -- TODO 2. It has to be a letter that has not been tried yet. Use the list_letters attribute to check this. If it has been tried, print "{letter} was already tried".
-        # DONE -- TODO 3: If the letter is valid, call the check_letter method
+                # Asks the user if they want to play again if they failed,
+                # exits if no, reruns the program if yes
+                if input("Do you want to play again (y/n)") == 'n':
+                    sys.exit()
+                else:
+                    print("\n")
+                    print("You didn't say no, so here we go again!")
+                    game2 = Hangman(word_list, num_lives=5)
+                    game2.ask_letter()
 
             pass
         
 
 def play_game(word_list):
-    # As an aid, part of the code is already provided:
+    # Calls ask_letter function
     game = Hangman(word_list, num_lives=5)
     game.ask_letter()
-
-    # DONE -- TODO 1: To test this task, you can call the ask_letter method
-    # DONE -- TODO 2: To test this task, upon initialization, two messages should be printed 
-    # DONE -- TODO 3: To test this task, you call the ask_letter method and check if the letter is in the word
-    # DONE -- TODO 4: Iteratively ask the user for a letter until the user guesses the word or runs out of lives
-    # DONE -- If the user guesses the word, print "Congratulations, you won!"
-    # DONE -- If the user runs out of lives, print "You ran out of lives. The word was {word}"
-
     pass
 
 if __name__ == '__main__':
+    # A list for words to be selected from for the game
     word_list = ['apple', 'pear', 'banana', 'orange', 'strawberry', 'watermelon'] 
+    # Calls play_game function and begins the program
     play_game(word_list)
 
 
